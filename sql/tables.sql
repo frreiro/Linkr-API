@@ -13,13 +13,21 @@ CREATE TABLE "sessions" (
     "valid" BOOLEAN NOT NULL DEFAULT false, 
     "createdAt" TIMESTAMP NOT NULL DEFAULT NOW()
 );
+CREATE TABLE "linkInfo" (
+    "id" SERIAL PRIMARY KEY,
+    "title" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "url" TEXT NOT NULL,
+    "image" TEXT NOT NULL,
+    "createdAt" TIMESTAMP NOT NULL DEFAULT NOW()
+);
 CREATE TABLE "posts" (
     "id" SERIAL PRIMARY KEY,
     "userId" INTEGER NOT NULL REFERENCES "users"("id"),
-    "url" TEXT NOT NULL,
+    "linkId" INTEGER NOT NULL REFERENCES "linkInfo"("id"),
     "description" TEXT NOT NULL, 
     "createdAt" TIMESTAMP NOT NULL DEFAULT NOW(),
-    "deleteddAt" TIMESTAMP DEFAULT NULL
+    "deletedAt" TIMESTAMP DEFAULT null
 );
 CREATE TABLE "hashtags" (
     "id" SERIAL PRIMARY KEY,
