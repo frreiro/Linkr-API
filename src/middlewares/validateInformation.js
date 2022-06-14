@@ -22,6 +22,7 @@ export async function validatePost(req, res, next) {
         const tokenResult = tokenQuery.rows[0]
         if (!tokenResult) return res.status(401).send("Invalid token.")
 
+        res.locals.user = userResult
         next()
     } catch (e) {
         return res.status(500).send(e)
