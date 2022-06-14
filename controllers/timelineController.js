@@ -4,7 +4,6 @@ export async function postsData(req, res) {
     try {
         const result = await repositoryTimeline.getPost();
         const arrPost = result.rows
-
         res.status(200).send(_mapPostData(arrPost));
     } catch (e) {
         console.log(e)
