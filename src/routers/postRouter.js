@@ -5,7 +5,6 @@ import { validatePost } from "../middlewares/validateInformation.js"
 
 const postRouter = Router()
 
-// postRouter.post("/posts", validatePost, createPost)
-postRouter.post("/posts", createPost)
+postRouter.post("/posts", validatePost, createPost)
 
 export default postRouter
