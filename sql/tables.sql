@@ -19,7 +19,7 @@ CREATE TABLE "posts" (
     "url" TEXT NOT NULL,
     "description" TEXT NOT NULL, 
     "createdAt" TIMESTAMP NOT NULL DEFAULT NOW(),
-    "deleteddAt" TIMESTAMP NOT NULL DEFAULT null
+    "deleteddAt" TIMESTAMP DEFAULT NULL
 );
 CREATE TABLE "hashtags" (
     "id" SERIAL PRIMARY KEY,
