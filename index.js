@@ -1,6 +1,7 @@
 import express from "express"
 import cors from "cors"
 import dotenv from "dotenv"
+import signupRouter from "./routers/signup.js";
 import authRoutes from "./routers/authRouter.js";
 
 import postRouter from "./src/routers/postRouter.js"
@@ -10,6 +11,7 @@ app.use(cors())
 app.use(express.json())
 dotenv.config()
 
+app.use(signupRouter);
 app.use(authRoutes)
 app.use(postRouter)
 
