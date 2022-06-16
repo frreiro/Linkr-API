@@ -1,4 +1,4 @@
-import connectDB from "../config/database";
+import connectDB from "../config/database.js";
 
 const db = await connectDB();
 async function getPost() {
@@ -13,5 +13,5 @@ async function getPost() {
 }
 
 export const repositoryTimeline = {
-    getPost, getUserByToken
+    getPost
 }

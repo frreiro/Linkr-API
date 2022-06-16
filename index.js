@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors"
 import dotenv from "dotenv"
-import timelineRoutes from "./routes/timelineRoute.js";
+import timelineRoutes from "./src/routes/timelineRoute.js"
 
 const app = express()
 app.use(cors())
