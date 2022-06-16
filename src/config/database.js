@@ -1,5 +1,5 @@
-import pg from "pg";
-import dotenv from "dotenv";
+import pg from 'pg';
+import dotenv from 'dotenv';
 dotenv.config();
 
 let chachedDB = null;
@@ -23,8 +23,7 @@ export default async function connectDB() {
   }
 
   const { Pool } = pg;
-
-  const db = new Pool(connectionParams)
+  const db = new Pool(connectionParams);
 
   await db.connect();
 
