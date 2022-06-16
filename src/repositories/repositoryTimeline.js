@@ -12,6 +12,16 @@ async function getPost() {
     `);
 }
 
+async function getToken(token) {
+    return db.query(
+        `SELECT * FROM sessions 
+        WHERE token=$1
+        AND sessions.valid = true
+        AND EXISTS (SELECT "userId" FROM users WHERE id = sessions."userId")`
+        , [token]
+    )
+}
+
 export const repositoryTimeline = {
-    getPost
+    getPost, getToken
 }
