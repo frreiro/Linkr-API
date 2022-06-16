@@ -21,9 +21,14 @@ async function likeAvailable(userId, postId){
     return db.query(`SELECT * FROM "postsLikes" WHERE "userId"=$1 AND "postId"=$2`,[userId, postId])
 }
 
+async function deleteLike(userId, postId){
+    return db.query(`DELETE FROM "postsLikes" WHERE "userId"=$1 AND "postId"=$2`,[userId, postId])
+}
+
 export const likesRepository = {
     getUser,
     findPost,
     insertLike,
-    likeAvailable
+    likeAvailable,
+    deleteLike
 }

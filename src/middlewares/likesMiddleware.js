@@ -21,13 +21,34 @@ export async function validateToken(req, res, next){
 
 export async function postValidate(req, res, next){
     const {postId} = req.body
+
+    try {
+        const post = await likesRepository.findPost(postId)
+        if(post.rows.length === 0) return res.status(422).send("Este post não existe")    
+        next()
+    } catch (error) {
+        res.sendStatus(500)
+    }
+
+}
+
+export async function deleteLike(req, res, next){
+    const {postId} = req.body
     const {id : userId} = res.locals.user
 
-    const post = await likesRepository.findPost(postId)
-    if(post.rows.length === 0) return res.status(422).send("Este post não existe")
+    try {
+        const likeAvailable = await likesRepository.likeAvailable(userId, postId)
+        
+        if(likeAvailable.rows.length > 0) {
+            await likesRepository.deleteLike(userId, postId)
+            return res.status(201).send("Post descurtido")
+        }
 
-    const likeAvailable = await likesRepository.likeAvailable(userId, postId)
-    if(likeAvailable.rows.length > 0) return res.status(422).send("Este usuário já curtiu este post")
+        next()
+        
+    } catch (error) {
+        res.send(500)
+    }
 
-    next()
+
 }
