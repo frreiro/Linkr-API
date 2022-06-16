@@ -1,4 +1,4 @@
-import connectDB from "../config/bank.js";
+import connectDB from "../config/database";
 
 const db = await connectDB();
 async function getPost() {
@@ -10,10 +10,6 @@ async function getPost() {
     ORDER BY p."createdAt" DESC
     LIMIT 20
     `);
-}
-
-async function getUserByToken(token) {
-    return db.query(`SELECT "userId" FROM sessions WHERE token = $1 AND valid = true`, [token]);
 }
 
 export const repositoryTimeline = {
