@@ -20,14 +20,17 @@ export async function validateToken(req, res, next){
 }
 
 export async function postValidate(req, res, next){
-    const {postId} = req.body
+    let {postId} = req.body
+    if(postId === undefined){
+        postId = req.params.id
+    }
 
     try {
         const post = await likesRepository.findPost(postId)
         if(post.rows.length === 0) return res.status(422).send("Este post não existe")    
         next()
     } catch (error) {
-        res.sendStatus(500)
+        res.status(500).send("Você não enviou as informações em um formato válido")
     }
 
 }
@@ -41,14 +44,13 @@ export async function deleteLike(req, res, next){
         
         if(likeAvailable.rows.length > 0) {
             await likesRepository.deleteLike(userId, postId)
-            return res.status(201).send("Post descurtido")
+            return res.status(204).send("Post descurtido")
         }
 
         next()
         
     } catch (error) {
-        res.send(500)
+        res.sendStatus(500)
     }
-
-
 }
+
