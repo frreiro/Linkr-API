@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import signupRouter from './src/routers/signup.js';
 import authRoutes from './src/routers/authRouter.js';
 import postRouter from './src/routers/postRouter.js';
+import timelineRoutes from "./src/routes/timelineRoute.js"
 
 const app = express();
 app.use(cors());
@@ -14,6 +15,7 @@ dotenv.config();
 app.use(signupRouter);
 app.use(authRoutes);
 app.use(postRouter);
+app.use(timelineRoutes)
 
 const { PORT } = process.env;
 app.listen(PORT, () => {

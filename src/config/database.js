@@ -23,7 +23,6 @@ export default async function connectDB() {
   }
 
   const { Pool } = pg;
-
   const db = new Pool(connectionParams);
 
   await db.connect();
