@@ -6,7 +6,7 @@ export async function createPost(req, res) {
     const { description } = req.body
     const { user } = res.locals
     try {
-        const link = await urlMetadata("https://github.com/frreiro/Linkr")
+        const link = await urlMetadata(req.body.url)
         const linkQuery = await userRepository.insertLinkInfo(link)
         const linkResult = linkQuery.rows[0]
 
