@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import { postsData } from '../controllers/timelineController.js';
+import { tokenExists } from '../middlewares/timelineMiddleware.js';
 
 const timelineRoutes = Router();
 
-//TODO: colocar o tokenValidate para validar o token
-timelineRoutes.get('/timeline', postsData)
+timelineRoutes.get('/timeline', tokenExists, postsData)
 
 export default timelineRoutes;

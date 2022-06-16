@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import signupRouter from './src/routers/signup.js';
 import authRoutes from './src/routers/authRouter.js';
 import postRouter from './src/routers/postRouter.js';
-import timelineRoutes from "./src/routes/timelineRoute.js"
+import timelineRoutes from './src/routers/timelineRoute.js';
 
 const app = express();
 app.use(cors());
