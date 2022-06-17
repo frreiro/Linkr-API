@@ -5,6 +5,11 @@ async function getUser(username) {
   return db.query(`SELECT * FROM users WHERE users."userName"=$1`, [username]);
 }
 
+async function findUserById(userId) {
+  const db = await connectDB();
+  return db.query(`SELECT * FROM users WHERE users.id = $1`, [userId]);
+}
+
 async function getToken(hash, userId) {
   const db = await connectDB();
   return db.query(
@@ -39,9 +44,34 @@ async function insertPost(userId, linkInfoId, description) {
   );
 }
 
+async function checkPostOwner(postId, userId) {
+  const db = await connectDB();
+  return db.query(
+    `SELECT * FROM posts
+        WHERE posts.id = $1 AND posts."userId" = $2
+        `,
+    [postId, userId]
+  );
+}
+
+async function updatePost(description, postId) {
+  const db = await connectDB();
+  return db.query(
+    `UPDATE posts
+        SET description = $1
+        WHERE id = $2
+        RETURNING description
+        `,
+    [description, postId]
+  );
+}
+
 export const userRepository = {
   getUser,
+  findUserById,
   getToken,
   insertLinkInfo,
   insertPost,
+  checkPostOwner,
+  updatePost,
 };

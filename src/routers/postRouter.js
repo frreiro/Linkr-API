@@ -1,9 +1,21 @@
-import { Router } from 'express';
-import { createPost } from '../controllers/postsController.js';
-import { validatePost } from '../middlewares/validateInformation.js';
+import { Router } from "express"
+import { createPost, putPost } from "../controllers/postsController.js"
+import {
+    validatePostOwnership,
+    validatePostSchema,
+    validateToken,
+    validateUpdatePostSchema,
+} from "../middlewares/validateInformation.js"
 
-const postRouter = Router();
+const postRouter = Router()
 
-postRouter.post('/posts', validatePost, createPost);
+postRouter.post("/posts", validatePostSchema, validateToken, createPost)
+postRouter.put(
+    "/posts/:id",
+    validateUpdatePostSchema,
+    validateToken,
+    validatePostOwnership,
+    putPost
+)
 
-export default postRouter;
+export default postRouter

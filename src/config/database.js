@@ -19,11 +19,13 @@ export default async function connectDB() {
   if (process.env.DATABASE_URL) {
     connectionParams = {
       connectionString: process.env.DATABASE_URL,
+      ssl: {
+        rejectUnauthorized: false,
+      },
     };
   }
 
   const { Pool } = pg;
-
   const db = new Pool(connectionParams);
 
   await db.connect();

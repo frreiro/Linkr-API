@@ -25,7 +25,7 @@ CREATE TABLE "posts" (
     "id" SERIAL PRIMARY KEY,
     "userId" INTEGER NOT NULL REFERENCES "users"("id"),
     "linkId" INTEGER NOT NULL REFERENCES "linkInfo"("id"),
-    "description" TEXT NOT NULL, 
+    "description" TEXT, 
     "createdAt" TIMESTAMP NOT NULL DEFAULT NOW(),
     "deletedAt" TIMESTAMP DEFAULT null
 );
