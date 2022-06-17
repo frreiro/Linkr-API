@@ -7,8 +7,7 @@ async function getUser(username) {
 
 async function findUserById(userId) {
   const db = await connectDB();
-  const { rows: user } = db.query(`SELECT * FROM users WHERE users.id = $1`, [userId]);
-  return user[0];
+  return db.query(`SELECT * FROM users WHERE users.id = $1`, [userId]);
 }
 
 async function getToken(hash, userId) {
