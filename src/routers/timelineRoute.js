@@ -4,6 +4,6 @@ import { tokenExists } from '../middlewares/timelineMiddleware.js';
 
 const timelineRoutes = Router();
 
-timelineRoutes.get('/timeline', tokenExists, postsData)
+timelineRoutes.get('/timeline', tokenExists, postsData);
 
 export default timelineRoutes;
