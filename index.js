@@ -19,6 +19,7 @@ app.use(postRouter);
 app.use(likesRouter)
 app.use(timelineRoutes)
 app.use(hashtagsRouter)
+app.use(likesRouter);
 app.use(searchRouter);
 
 const { PORT } = process.env;
