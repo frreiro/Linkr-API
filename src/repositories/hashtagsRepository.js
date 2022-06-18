@@ -18,7 +18,7 @@ async function findPostsByHashtagName(hashtag) {
 //TODO: possível contador nas hashtags pra saber quais são mais escritas
 async function getHashtagName(hashtag) {
   const db = await connectDB();
-  const query = `SELECT id,hashtag FROM hashtags ORDER BY hashtags.id`;
+  const query = `SELECT id,hashtag FROM hashtags ORDER BY hashtags.id LIMIT 10`;
   return db.query(query);
 }
 
