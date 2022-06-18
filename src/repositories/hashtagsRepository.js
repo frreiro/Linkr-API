@@ -23,6 +23,12 @@ async function getHashtagName(hashtag) {
 }
 
 
+async function insertHashtag(hashtag) {
+  const db = await connectDB();
+  const query = `SELECT id,hashtag FROM hashtags ORDER BY hashtags.id LIMIT 10`;
+  return db.query(query);
+
+}
 export const hashtagsRepository = {
   findPostsByHashtagName, getHashtagName
 };
