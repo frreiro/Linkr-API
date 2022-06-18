@@ -9,3 +9,13 @@ export const getPostsByHashtag = async (req, res) => {
     res.status(500).send(error);
   }
 };
+
+
+export const getHashtag = async (req, res) => {
+  try {
+    const { rows: hashtags } = await hashtagsRepository.getHashtagName();
+    res.status(200).send(hashtags);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+}
