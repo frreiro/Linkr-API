@@ -23,12 +23,14 @@ async function getHashtagName(hashtag) {
 }
 
 
-async function insertHashtag(hashtag) {
+async function insertHashtag(hashtagArr) {
+  const hashtagTotal = hashtagArr.map((hashtag, index) => `($${index + 1})`).join()
+
   const db = await connectDB();
-  const query = `SELECT id,hashtag FROM hashtags ORDER BY hashtags.id LIMIT 10`;
-  return db.query(query);
+  const query = `INSERT INTO hashtags (hashtag) VALUES ${hashtagTotal}`;
+  return db.query(query, hashtagArr);
 
 }
 export const hashtagsRepository = {
-  findPostsByHashtagName, getHashtagName
+  findPostsByHashtagName, getHashtagName, insertHashtag
 };
