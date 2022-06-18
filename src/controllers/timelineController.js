@@ -13,9 +13,10 @@ export async function postsData(req, res) {
 
 function _mapPostData(rows) {
     const newRows = rows.map((post) => {
-        const { id, userImage, userName, postDescription, title, description, url, image } = post
+        const { postId, userId, userImage, userName, postDescription, title, description, url, image } = post
         const newPost = {
-            id,
+            postId,
+            userId,
             userImage,
             userName,
             postDescription,
