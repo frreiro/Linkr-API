@@ -4,6 +4,6 @@ import { searchMiddleware } from '../middlewares/searchMiddleware.js';
 
 const searchRouter = Router();
 
-searchRouter.get("/search", searchMiddleware, searchGet);
+searchRouter.post("/search", searchMiddleware, searchGet);
 
 export default searchRouter;

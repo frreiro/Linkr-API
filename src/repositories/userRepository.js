@@ -68,7 +68,6 @@ async function updatePost(description, postId) {
 
 async function getUserByName(userName){
   const db = await connectDB();
-  console.log(userName);
   return db.query(`SELECT * FROM users WHERE LOWER("userName") LIKE $1`, [`%${userName}%`]);
 }
 
