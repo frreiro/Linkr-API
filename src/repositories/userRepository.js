@@ -66,6 +66,11 @@ async function updatePost(description, postId) {
   );
 }
 
+async function getUserByName(userName){
+  const db = await connectDB();
+  return db.query(`SELECT * FROM users WHERE LOWER("userName") LIKE $1`, [`%${userName}%`]);
+}
+
 export const userRepository = {
   getUser,
   findUserById,
@@ -74,4 +79,5 @@ export const userRepository = {
   insertPost,
   checkPostOwner,
   updatePost,
+  getUserByName
 };
