@@ -16,6 +16,7 @@ postRouter.put(
     validateUpdatePostSchema,
     validateToken,
     validatePostOwnership,
+    searchHashtag,
     putPost
 )
 
