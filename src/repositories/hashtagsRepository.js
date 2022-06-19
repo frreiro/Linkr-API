@@ -4,12 +4,14 @@ async function findPostsByHashtagName(hashtag) {
   const db = await connectDB();
 
   const query = `
-  SELECT * FROM hashtags 
-  JOIN "postHashtag"
-  ON hashtags.id = "postHashtag"."hashtagId"
-  JOIN posts
-  ON posts.id = "postHashtag"."postId"
-  WHERE hashtags."hashtag" = $1
+  SELECT p.id, u.id as "userId", u."userName", u.image as "userImage", p.description as "postDescription", l.title, l.description, l.url, l.image 
+  FROM "postHashtag" ph
+  JOIN hashtags h ON ph."hashtagId" = h.id
+  JOIN posts p ON ph."postId" = p.id
+  JOIN users u ON p."userId" = u.id
+  JOIN "linkInfo" l ON l.id = p."linkId"
+  WHERE hashtag = $1
+  ORDER BY p."createdAt" DESC
   `;
 
   return db.query(query, [hashtag]);

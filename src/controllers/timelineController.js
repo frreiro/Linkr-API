@@ -11,7 +11,7 @@ export async function postsData(req, res) {
     }
 }
 
-function _mapPostData(rows) {
+export function _mapPostData(rows) {
     const newRows = rows.map((post) => {
         const { id, userId, userImage, userName, postDescription, title, description, url, image } = post
         const newPost = {
