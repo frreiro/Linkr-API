@@ -7,7 +7,22 @@ async function getUser(username) {
 
 async function findUserById(userId) {
   const db = await connectDB();
-  return db.query(`SELECT * FROM users WHERE users.id = $1`, [userId]);
+  return db.query(
+    `SELECT users."id", users."email", users."userName", users."image" FROM users WHERE users."id" = $1`,
+    [userId]
+  );
+}
+
+async function findCurrentUserInfos(usertoken) {
+  const db = await connectDB();
+  return db.query(
+    `
+    SELECT users.id, users.email, users."userName" as username, users.image FROM sessions 
+    JOIN users ON sessions."userId" = users.id 
+    WHERE sessions.token = $1
+    `,
+    [usertoken]
+  );
 }
 
 async function getToken(hash, userId) {
@@ -69,16 +84,20 @@ async function updatePost(description, postId) {
 
 async function getUserByName(userName) {
   const db = await connectDB();
-  return db.query(`SELECT id, "userName", image FROM users WHERE LOWER("userName") LIKE $1`, [`%${userName}%`]);
+  return db.query(
+    `SELECT id, "userName", image FROM users WHERE LOWER("userName") LIKE $1`,
+    [`%${userName}%`]
+  );
 }
 
 export const userRepository = {
   getUser,
   findUserById,
+  findCurrentUserInfos,
   getToken,
   insertLinkInfo,
   insertPost,
   checkPostOwner,
   updatePost,
-  getUserByName
+  getUserByName,
 };
