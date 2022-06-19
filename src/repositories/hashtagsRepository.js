@@ -16,21 +16,38 @@ async function findPostsByHashtagName(hashtag) {
 }
 
 //TODO: possível contador nas hashtags pra saber quais são mais escritas
-async function getHashtagName(hashtag) {
+async function getHashtagName() {
   const db = await connectDB();
-  const query = `SELECT id,hashtag FROM hashtags ORDER BY hashtags.id LIMIT 10`;
+  const query = `
+  SELECT hashtag, COUNT(hashtag) as "qntUsadas" 
+    FROM hashtags 
+    GROUP BY hashtag 
+    ORDER BY "qntUsadas" DESC 
+    LIMIT 10`;
   return db.query(query);
 }
 
 
-async function insertHashtag(hashtagArr) {
-  const hashtagTotal = hashtagArr.map((hashtag, index) => `($${index + 1})`).join()
-
+async function insertHashtag(hashtag) {
   const db = await connectDB();
-  const query = `INSERT INTO hashtags (hashtag) VALUES ${hashtagTotal}`;
-  return db.query(query, hashtagArr);
+  const query = `INSERT INTO hashtags (hashtag) VALUES ($1) RETURNING id`;
+  return db.query(query, [hashtag]);
 
 }
+
+async function checkExistHashtag(hashtag) {
+
+  const db = await connectDB();
+  const query = `SELECT id FROM hashtags WHERE hashtag = $1`;
+  return db.query(query, [hashtag]);
+}
+
+async function linkPostAndHashtags(postId, hashtagId) {
+  const db = await connectDB();
+  const query = `INSERT INTO "postHashtag" ("postId", "hashtagId") VALUES ($1,$2)`;
+  return db.query(query, [postId, hashtagId]);
+}
+
 export const hashtagsRepository = {
-  findPostsByHashtagName, getHashtagName, insertHashtag
+  findPostsByHashtagName, getHashtagName, insertHashtag, checkExistHashtag, linkPostAndHashtags
 };

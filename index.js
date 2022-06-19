@@ -12,6 +12,8 @@ import searchRouter from './src/routers/searchRouter.js';
 
 const app = express();
 app.use(cors());
+app.use(express.json());
+dotenv.config();
 
 app.use(signupRouter);
 app.use(authRoutes);

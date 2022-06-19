@@ -1,21 +1,24 @@
 import urlMetadata from "url-metadata"
+import { hashtagsRepository } from "../repositories/hashtagsRepository.js";
 
 import { userRepository } from "../repositories/userRepository.js"
 
 export async function createPost(req, res) {
     const { description } = req.body
     const { user } = res.locals
+    const { hashtagsIds } = res.locals;
+
     try {
         const link = await urlMetadata(req.body.url)
         const linkQuery = await userRepository.insertLinkInfo(link)
         const linkResult = linkQuery.rows[0]
+        const { rows: [post] } = await userRepository.insertPost(user.id, linkResult.id, description)
 
-        const postQuery = await userRepository.insertPost(
-            user.id,
-            linkResult.id,
-            description
-        )
-
+        if (hashtagsIds) {
+            for (const hashtag of hashtagsIds) {
+                await hashtagsRepository.linkPostAndHashtags(post.id, hashtag);
+            }
+        }
         return res.sendStatus(201)
     } catch (e) {
         res.status(500).send(e)
