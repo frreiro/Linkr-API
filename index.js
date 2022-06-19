@@ -18,9 +18,10 @@ dotenv.config();
 app.use(signupRouter);
 app.use(authRoutes);
 app.use(postRouter);
-app.use(hashtagsRouter);
+app.use(likesRouter)
+app.use(timelineRoutes)
+app.use(hashtagsRouter)
 app.use(likesRouter);
-app.use(timelineRoutes);
 app.use(searchRouter);
 
 const { PORT } = process.env;

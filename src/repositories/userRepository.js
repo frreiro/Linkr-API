@@ -39,6 +39,7 @@ async function insertPost(userId, linkInfoId, description) {
   return db.query(
     `INSERT INTO posts ("userId", "linkId", description)
         VALUES ($1, $2, $3)
+        RETURNING posts.id
         `,
     [userId, linkInfoId, description]
   );
@@ -66,7 +67,7 @@ async function updatePost(description, postId) {
   );
 }
 
-async function getUserByName(userName){
+async function getUserByName(userName) {
   const db = await connectDB();
   return db.query(`SELECT * FROM users WHERE LOWER("userName") LIKE $1`, [`%${userName}%`]);
 }
