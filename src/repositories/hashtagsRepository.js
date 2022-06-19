@@ -15,7 +15,6 @@ async function findPostsByHashtagName(hashtag) {
   return db.query(query, [hashtag]);
 }
 
-//TODO: possível contador nas hashtags pra saber quais são mais escritas
 async function getHashtagName() {
   const db = await connectDB();
   const query = `
