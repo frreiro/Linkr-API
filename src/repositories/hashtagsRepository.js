@@ -20,10 +20,10 @@ async function findPostsByHashtagName(hashtag) {
 async function getHashtagName() {
   const db = await connectDB();
   const query = `
-  SELECT COUNT("hashtagId") as "qntUsadas", h.hashtag
+  SELECT h.id,COUNT("hashtagId") as "qntUsadas", h.hashtag
   from "postHashtag" ph
   JOIN hashtags h ON h.id = ph."hashtagId"
-  GROUP BY ph."hashtagId", h.hashtag
+  GROUP BY ph."hashtagId", h.hashtag, h.id
   ORDER BY "qntUsadas" DESC LIMIT 10`;
   return db.query(query);
 }
