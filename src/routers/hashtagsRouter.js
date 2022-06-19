@@ -4,7 +4,7 @@ import { getHashtag, getPostsByHashtag } from './../controllers/hashtagsControll
 
 const hashtagsRouter = Router();
 
-hashtagsRouter.get('/hashtags/:hashtag', getPostsByHashtag);
+hashtagsRouter.get('/hashtags/:hashtag', tokenExists, getPostsByHashtag);
 hashtagsRouter.get('/hashtags', tokenExists, getHashtag)
 
 export default hashtagsRouter;
