@@ -72,6 +72,19 @@ async function getUserByName(userName) {
   return db.query(`SELECT * FROM users WHERE LOWER("userName") LIKE $1`, [`%${userName}%`]);
 }
 
+async function getUserPosts(userId) {
+  const db = await connectDB();
+  return db.query(
+    `SELECT p.id, u.id as "userId", u."userName", u.image as "userImage", p.description as "postDescription", l.title, l.description, l.url, l.image 
+     FROM posts p
+     JOIN users u ON u.id = p."userId"
+     JOIN "linkInfo" l ON l.id = p."linkId"
+     WHERE p."userId" = $1
+     ORDER BY p."createdAt" DESC
+  `, [userId]
+  );
+}
+
 export const userRepository = {
   getUser,
   findUserById,
@@ -80,5 +93,6 @@ export const userRepository = {
   insertPost,
   checkPostOwner,
   updatePost,
-  getUserByName
+  getUserByName,
+  getUserPosts
 };
