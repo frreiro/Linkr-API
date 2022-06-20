@@ -7,7 +7,10 @@ async function getUser(username) {
 
 async function findUserById(userId) {
   const db = await connectDB();
-  return db.query(`SELECT * FROM users WHERE users.id = $1`, [userId]);
+  return db.query(
+    `SELECT users."id", users."email", users."userName", users."image" FROM users WHERE users."id" = $1`,
+    [userId]
+  );
 }
 
 async function getToken(hash, userId) {
@@ -69,7 +72,10 @@ async function updatePost(description, postId) {
 
 async function getUserByName(userName) {
   const db = await connectDB();
-  return db.query(`SELECT * FROM users WHERE LOWER("userName") LIKE $1`, [`%${userName}%`]);
+  return db.query(
+    `SELECT id, "userName", image FROM users WHERE LOWER("userName") LIKE $1`,
+    [`%${userName}%`]
+  );
 }
 
 async function getUserPosts(userId) {

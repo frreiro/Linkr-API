@@ -10,7 +10,7 @@ CREATE TABLE "sessions" (
     "id" SERIAL PRIMARY KEY,
     "userId" INTEGER NOT NULL REFERENCES "users"("id"),
     "token" TEXT NOT NULL UNIQUE,
-    "valid" BOOLEAN NOT NULL DEFAULT false, 
+    "valid" BOOLEAN NOT NULL DEFAULT true, 
     "createdAt" TIMESTAMP NOT NULL DEFAULT NOW()
 );
 CREATE TABLE "linkInfo" (
@@ -44,14 +44,5 @@ CREATE TABLE "postHashtag" (
     "id" SERIAL PRIMARY KEY,
     "postId" INTEGER NOT NULL REFERENCES "posts"("id"),
     "hashtagId" INTEGER NOT NULL REFERENCES "hashtags"("id"),
-    "createdAt" TIMESTAMP NOT NULL DEFAULT NOW()
-);
-
-CREATE TABLE "linkInfo" (
-    "id" SERIAL PRIMARY KEY,
-    "title" TEXT NOT NULL,
-    "description" TEXT NOT NULL,
-    "url" TEXT NOT NULL,
-    "image" TEXT NOT NULL,
     "createdAt" TIMESTAMP NOT NULL DEFAULT NOW()
 );

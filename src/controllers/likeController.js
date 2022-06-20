@@ -26,7 +26,11 @@ export async function  likedby(req, res){
     const {id : postId} = req.params
     try {
         const listNames = await likesRepository.findLikedBy(postId)
-        res.status(200).send(listNames.rows)
+        const names = []
+        listNames.rows.forEach(e => {
+            names.push(e.userName)
+        });
+        res.status(200).send(names)
     } catch (error) {
         res.status(500).send(error)
     }

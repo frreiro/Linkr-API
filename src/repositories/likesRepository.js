@@ -31,11 +31,16 @@ async function findLikedBy(postId){
                      WHERE "postId" = $1`,[postId])
 }
 
+async function deletePost(postId){
+    return db.query(`DELETE FROM posts WHERE "id" = $1`, [postId])
+}
+
 export const likesRepository = {
     getUser,
     findPost,
     insertLike,
     likeAvailable,
     deleteLike,
-    findLikedBy
+    findLikedBy,
+    deletePost
 }

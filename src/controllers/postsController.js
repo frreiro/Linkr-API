@@ -28,7 +28,8 @@ export async function createPost(req, res) {
 
 export async function putPost(req, res) {
     const { description } = req.body
-    const { user } = res.locals
+    const { user, hashtagsIds } = res.locals
+
     try {
         const updateQuery = await userRepository.updatePost(
             description,
@@ -36,6 +37,11 @@ export async function putPost(req, res) {
         )
         const updateQueryResult = updateQuery.rows[0]
 
+        if (hashtagsIds) {
+            for (const hashtag of hashtagsIds) {
+                await hashtagsRepository.linkPostAndHashtags(user.postId, hashtag);
+            }
+        }
         res.status(200).send(updateQueryResult)
     } catch (e) {
         res.status(500).send(e)
