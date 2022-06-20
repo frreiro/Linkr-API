@@ -24,7 +24,7 @@ export async function postValidate(req, res, next){
     if(postId === undefined){
         postId = req.params.id
     }
-
+    
     try {
         const post = await likesRepository.findPost(postId)
         if(post.rows.length === 0) return res.status(422).send("Este post não existe")    
