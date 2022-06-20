@@ -46,3 +46,22 @@ CREATE TABLE "postHashtag" (
     "hashtagId" INTEGER NOT NULL REFERENCES "hashtags"("id"),
     "createdAt" TIMESTAMP NOT NULL DEFAULT NOW()
 );
+CREATE TABLE "retweets" (
+    "id" SERIAL PRIMARY KEY,
+    "userId" INTEGER NOT NULL REFERENCES "users"("id"),
+    "postId" INTEGER NOT NULL REFERENCES "posts"("id"),
+    "createdAt" TIMESTAMP NOT NULL DEFAULT NOW()
+);
+CREATE TABLE "comments" (
+    "id" SERIAL PRIMARY KEY,
+    "userId" INTEGER NOT NULL REFERENCES "users"("id"),
+    "postId" INTEGER NOT NULL REFERENCES "posts"("id"),
+    "comment" TEXT NOT NULL,
+    "createdAt" TIMESTAMP NOT NULL DEFAULT NOW()
+);
+CREATE TABLE "followers" (
+    "id" SERIAL PRIMARY KEY,
+    "userId" INTEGER NOT NULL REFERENCES "users"("id"),
+    "followedId" INTEGER NOT NULL REFERENCES "users"("id"),
+    "createdAt" TIMESTAMP NOT NULL DEFAULT NOW()
+);
