@@ -9,6 +9,7 @@ import likesRouter from './src/routers/likesRouter.js';
 import timelineRoutes from './src/routers/timelineRoute.js';
 import hashtagsRouter from './src/routers/hashtagsRouter.js';
 import searchRouter from './src/routers/searchRouter.js';
+import deleteRouter from './src/routers/deleteRouter.js';
 
 const app = express();
 app.use(cors());
@@ -23,6 +24,7 @@ app.use(timelineRoutes)
 app.use(hashtagsRouter)
 app.use(likesRouter);
 app.use(searchRouter);
+app.use(deleteRouter);
 
 const { PORT } = process.env;
 app.listen(PORT, () => {
