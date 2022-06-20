@@ -13,18 +13,6 @@ async function findUserById(userId) {
   );
 }
 
-async function findCurrentUserInfos(usertoken) {
-  const db = await connectDB();
-  return db.query(
-    `
-    SELECT users.id, users.email, users."userName" as username, users.image FROM sessions 
-    JOIN users ON sessions."userId" = users.id 
-    WHERE sessions.token = $1
-    `,
-    [usertoken]
-  );
-}
-
 async function getToken(hash, userId) {
   const db = await connectDB();
   return db.query(
@@ -93,7 +81,6 @@ async function getUserByName(userName) {
 export const userRepository = {
   getUser,
   findUserById,
-  findCurrentUserInfos,
   getToken,
   insertLinkInfo,
   insertPost,
