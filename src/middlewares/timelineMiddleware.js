@@ -7,11 +7,11 @@ export async function tokenExists(req, res, next) {
     if (!token) return res.sendStatus(401)
 
     try {
-        const tokenQuery = await repositoryTimeline.getToken(token)
-        const tokenResult = tokenQuery.rows[0]
-        if (!tokenResult) return res.status(401).send("Invalid token.")
+        const { rows } = await repositoryTimeline.getToken(token)
+        const { userId } = rows[0]
+        if (!userId) return res.status(401).send("Invalid token.")
+        res.locals.userId = userId
         next()
-
     } catch (e) {
         return res.status(500).send(e)
     }
