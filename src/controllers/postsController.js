@@ -2,6 +2,7 @@ import urlMetadata from "url-metadata"
 import { hashtagsRepository } from "../repositories/hashtagsRepository.js";
 
 import { userRepository } from "../repositories/userRepository.js"
+import { _mapPostData } from "./timelineController.js";
 
 export async function createPost(req, res) {
     const { description } = req.body
@@ -44,6 +45,20 @@ export async function putPost(req, res) {
         }
         res.status(200).send(updateQueryResult)
     } catch (e) {
+        res.status(500).send(e)
+    }
+}
+
+export async function getUserPosts(req, res) {
+    const {id} = req.params
+
+    try {
+        const postsQuery = await userRepository.getUserPosts(id)
+        const postsQueryResult = postsQuery.rows
+        
+        res.status(200).send(_mapPostData(postsQueryResult));
+    } catch (e) {
+        console.log(e)
         res.status(500).send(e)
     }
 }

@@ -1,5 +1,10 @@
 import { Router } from "express"
-import { createPost, putPost } from "../controllers/postsController.js"
+import {
+    createPost,
+    getUserPosts,
+    putPost,
+} from "../controllers/postsController.js"
+import { tokenExists } from "../middlewares/timelineMiddleware.js"
 import { checkEditHashtags, searchHashtag } from "../middlewares/hashtagsMiddleware.js"
 import {
     validatePostOwnership,
@@ -10,7 +15,14 @@ import {
 
 const postRouter = Router()
 
-postRouter.post("/posts", validatePostSchema, validateToken, searchHashtag, createPost)
+postRouter.get("/posts/:id", tokenExists, getUserPosts)
+postRouter.post(
+    "/posts",
+    validatePostSchema,
+    validateToken,
+    searchHashtag,
+    createPost
+)
 postRouter.put(
     "/posts/:id",
     validateUpdatePostSchema,
