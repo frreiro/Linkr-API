@@ -7,6 +7,7 @@ export async function createPost(req, res) {
     const { description } = req.body
     const { user } = res.locals
     const { hashtagsIds } = res.locals;
+    console.log(hashtagsIds)
 
     try {
         const link = await urlMetadata(req.body.url)

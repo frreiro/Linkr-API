@@ -37,7 +37,6 @@ async function insertHashtag(hashtag) {
 }
 
 async function checkExistHashtag(hashtag) {
-
   const db = await connectDB();
   const query = `SELECT id FROM hashtags WHERE hashtag = $1`;
   return db.query(query, [hashtag]);
@@ -45,10 +44,33 @@ async function checkExistHashtag(hashtag) {
 
 async function linkPostAndHashtags(postId, hashtagId) {
   const db = await connectDB();
-  const query = `INSERT INTO "postHashtag" ("postId", "hashtagId") VALUES ($1,$2)`;
+  const query = `
+      INSERT INTO "postHashtag" ("postId","hashtagId")
+      SELECT $1, $2
+      WHERE NOT EXISTS 
+      (SELECT "postId","hashtagId" FROM "postHashtag" ph WHERE ph."postId" = $1 AND ph."hashtagId" = $2)`;
   return db.query(query, [postId, hashtagId]);
 }
 
+async function hashtagInPost(postId) {
+  const db = await connectDB();
+  const query = `SELECT ph."hashtagId" FROM "postHashtag" ph WHERE ph."postId" = $1`;
+  return db.query(query, [postId]);
+}
+
+async function deleteHashtagInPost(postId, hashtagId) {
+  const db = await connectDB();
+  const query = `DELETE FROM "postHashtag" WHERE "postId" = $1 AND "hashtagId" = $2`;
+  return db.query(query, [postId, hashtagId]);
+}
+
+
 export const hashtagsRepository = {
-  findPostsByHashtagName, getHashtagName, insertHashtag, checkExistHashtag, linkPostAndHashtags
+  findPostsByHashtagName,
+  getHashtagName,
+  insertHashtag,
+  checkExistHashtag,
+  linkPostAndHashtags,
+  hashtagInPost,
+  deleteHashtagInPost
 };
