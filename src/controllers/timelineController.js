@@ -2,7 +2,6 @@ import { repositoryTimeline } from "../repositories/repositoryTimeline.js";
 
 export async function postsData(req, res) {
     const { page } = req.query
-    console.log(page)
     try {
         const result = await repositoryTimeline.getPost(page);
         const arrPost = result.rows
