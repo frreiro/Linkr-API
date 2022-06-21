@@ -1,12 +1,44 @@
 import { userRepository } from './../repositories/userRepository.js';
 
-export const getUserById = async (req, res) => {
-  const { id } = req.params;
+export const getUserPosts = async (req, res) => {
+  const { userId } = req.params;
   try {
-    const { rows: user } = await userRepository.findUserById(id);
-    if (!user[0]) return res.sendStatus(404);
-    res.status(200).send(user);
+    const { rows: result } = await userRepository.findUserPosts(userId);
+    const userPosts = organizeData(result);
+    res.status(200).send(userPosts);
   } catch (error) {
-    res.status(500).send(error);
+    res.sendStatus(500);
   }
 };
+
+function organizeData(result) {
+  const organizedData = result.map((obj) => {
+    const {
+      userId,
+      userImage,
+      userName,
+      id,
+      postDescription,
+      title,
+      description,
+      url,
+      image,
+    } = obj;
+
+    return {
+      id,
+      userId,
+      userImage,
+      userName,
+      postDescription,
+      linkInfo: {
+        title,
+        description,
+        url,
+        image,
+      },
+    };
+  });
+
+  return organizedData;
+}

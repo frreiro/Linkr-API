@@ -5,10 +5,19 @@ async function getUser(username) {
   return db.query(`SELECT * FROM users WHERE users."userName"=$1`, [username]);
 }
 
-async function findUserById(userId) {
+async function findUserPosts(userId) {
   const db = await connectDB();
   return db.query(
-    `SELECT users."id", users."email", users."userName", users."image" FROM users WHERE users."id" = $1`,
+    `
+  SELECT users.id as "userId", users.image as "userImage", users."userName", 
+  posts.id, posts."description" as "postDescription",
+  "linkInfo".title, "linkInfo".description, "linkInfo".url, "linkInfo".image
+  FROM users 
+  JOIN posts ON users.id = posts."userId"
+  JOIN "linkInfo" ON posts."linkId" = "linkInfo".id
+  WHERE users.id = $1
+  ORDER BY posts."createdAt" DESC 
+  `,
     [userId]
   );
 }
@@ -80,7 +89,7 @@ async function getUserByName(userName) {
 
 export const userRepository = {
   getUser,
-  findUserById,
+  findUserPosts,
   getToken,
   insertLinkInfo,
   insertPost,
