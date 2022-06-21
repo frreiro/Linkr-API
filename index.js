@@ -11,6 +11,7 @@ import hashtagsRouter from './src/routers/hashtagsRouter.js';
 import searchRouter from './src/routers/searchRouter.js';
 import deleteRouter from './src/routers/deleteRouter.js';
 import usersRouter from './src/routers/usersRouter.js';
+import commentsRouter from './src/routers/commentsRouter.js';
 
 const app = express();
 app.use(cors());
@@ -27,6 +28,7 @@ app.use(likesRouter);
 app.use(searchRouter);
 app.use(deleteRouter);
 app.use(usersRouter);
+app.use(commentsRouter)
 
 const { PORT } = process.env;
 app.listen(PORT, () => {
