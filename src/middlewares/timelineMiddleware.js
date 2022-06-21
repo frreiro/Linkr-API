@@ -1,10 +1,10 @@
-import { repositoryTimeline } from "../repositories/repositoryTimeline.js"
+import { repositoryTimeline } from '../repositories/repositoryTimeline.js';
 
 export async function tokenExists(req, res, next) {
-    const { authorization } = req.headers
+  const { authorization } = req.headers;
 
-    const token = authorization?.replace("Bearer ", "").trim()
-    if (!token) return res.sendStatus(401)
+  const token = authorization?.replace('Bearer ', '').trim();
+  if (!token) return res.sendStatus(401);
 
     try {
         const { rows } = await repositoryTimeline.getToken(token)
