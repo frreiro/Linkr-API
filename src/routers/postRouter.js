@@ -4,8 +4,8 @@ import {
     getUserPosts,
     putPost,
 } from "../controllers/postsController.js"
-import { searchHashtag } from "../middlewares/hashtagsMiddleware.js"
 import { tokenExists } from "../middlewares/timelineMiddleware.js"
+import { checkEditHashtags, searchHashtag } from "../middlewares/hashtagsMiddleware.js"
 import {
     validatePostOwnership,
     validatePostSchema,
@@ -29,6 +29,7 @@ postRouter.put(
     validateToken,
     validatePostOwnership,
     searchHashtag,
+    checkEditHashtags,
     putPost
 )
 
