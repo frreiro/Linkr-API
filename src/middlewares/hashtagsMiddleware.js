@@ -29,3 +29,28 @@ export async function searchHashtag(req, res, next) {
 
 }
 
+
+export async function checkEditHashtags(req, res, next) {
+    const { hashtagsIds } = res.locals
+    const { postId } = res.locals.user
+
+    try {
+
+        const { rows: oldHashtags } = await hashtagsRepository.hashtagInPost(postId);
+        const oldHashtagsId = []
+        for (const obj of oldHashtags) {
+            oldHashtagsId.push(obj.hashtagId);
+        }
+        const deletedHashtag = hashtagsIds
+            ? oldHashtagsId.filter((id) => !hashtagsIds.includes(id))
+            : oldHashtagsId
+
+        for (const hashtagId of deletedHashtag) {
+            await hashtagsRepository.deleteHashtagInPost(postId, hashtagId);
+        }
+        next()
+    } catch (e) {
+        return res.status(500).send(e)
+
+    }
+}

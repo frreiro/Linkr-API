@@ -1,6 +1,6 @@
 import { Router } from "express"
 import { createPost, putPost } from "../controllers/postsController.js"
-import { searchHashtag } from "../middlewares/hashtagsMiddleware.js"
+import { checkEditHashtags, searchHashtag } from "../middlewares/hashtagsMiddleware.js"
 import {
     validatePostOwnership,
     validatePostSchema,
@@ -17,6 +17,7 @@ postRouter.put(
     validateToken,
     validatePostOwnership,
     searchHashtag,
+    checkEditHashtags,
     putPost
 )
 
