@@ -13,6 +13,7 @@ import deleteRouter from './src/routers/deleteRouter.js';
 import usersRouter from './src/routers/usersRouter.js';
 import commentsRouter from './src/routers/commentsRouter.js';
 import retweetRouter from './src/routers/retweetRouter.js';
+import followRouter from './src/routers/followRouter.js';
 
 const app = express();
 app.use(cors());
@@ -31,6 +32,7 @@ app.use(deleteRouter);
 app.use(usersRouter);
 app.use(commentsRouter)
 app.use(retweetRouter);
+app.use(followRouter);
 
 const { PORT } = process.env;
 app.listen(PORT, () => {
