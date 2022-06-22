@@ -1,7 +1,7 @@
 import express from 'express';
 
-import { postFollow, removeFollow } from '../controllers/followController';
-import { tokenExists } from '../middlewares/timelineMiddleware';
+import { postFollow, removeFollow } from '../controllers/followController.js';
+import { tokenExists } from '../middlewares/timelineMiddleware.js';
 
 const followRouter = express.Router();
 
