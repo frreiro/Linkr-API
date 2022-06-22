@@ -11,6 +11,7 @@ import hashtagsRouter from './src/routers/hashtagsRouter.js';
 import searchRouter from './src/routers/searchRouter.js';
 import deleteRouter from './src/routers/deleteRouter.js';
 import usersRouter from './src/routers/usersRouter.js';
+import commentsRouter from './src/routers/commentsRouter.js';
 import retweetRouter from './src/routers/retweetRouter.js';
 
 const app = express();
@@ -28,6 +29,7 @@ app.use(likesRouter);
 app.use(searchRouter);
 app.use(deleteRouter);
 app.use(usersRouter);
+app.use(commentsRouter)
 app.use(retweetRouter);
 
 const { PORT } = process.env;
