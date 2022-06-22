@@ -1,5 +1,14 @@
 import connectDB from '../config/database.js';
 
+async function checkFollowStatus(currentUserId, followedUserId) {
+  const db = await connectDB();
+
+  return db.query(
+    'SELECT * FROM followers WHERE "userId" = $1 AND "followedId" = $2',
+    [currentUserId, followedUserId]
+  );
+}
+
 async function insertFollow(currentUserId, followedUserId) {
   const db = await connectDB();
 
@@ -19,6 +28,7 @@ async function deleteFollow(currentUserId, followedUserId) {
 }
 
 export const followRepository = {
+  checkFollowStatus,
   insertFollow,
   deleteFollow,
 };
