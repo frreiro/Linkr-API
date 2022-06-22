@@ -1,8 +1,10 @@
 import { repositoryTimeline } from "../repositories/repositoryTimeline.js";
 
 export async function postsData(req, res) {
+    const { page } = req.query
     try {
-        const result = await repositoryTimeline.getPost();
+        //TODO: Separar por seguidores
+        const result = await repositoryTimeline.getPost(page);
         const arrPost = result.rows
         res.status(200).send(_mapPostData(arrPost));
     } catch (e) {
