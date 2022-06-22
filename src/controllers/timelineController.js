@@ -15,7 +15,7 @@ export async function postsData(req, res) {
 
 export function _mapPostData(rows) {
     const newRows = rows.map((post) => {
-        const { id, userId, userImage, userName, postDescription, title, description, url, image } = post
+        const { id, userId, userImage, userName, postDescription, title, description, url, image, retweetCount, isRetweet, retweeterUsername } = post
         const newPost = {
             id,
             userId,
@@ -27,7 +27,10 @@ export function _mapPostData(rows) {
                 description,
                 url,
                 image
-            }
+            },
+            retweetCount,
+            isRetweet,
+            retweeterUsername
         }
         return newPost
     })

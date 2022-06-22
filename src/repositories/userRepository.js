@@ -91,6 +91,16 @@ async function getUserPosts(userId) {
   );
 }
 
+async function retweetPost(userId, postId) {
+  const db = await connectDB();
+  return db.query(
+    `INSERT INTO retweets ("userId", "postId")
+    VALUES ($1, $2)
+    `, 
+    [userId, postId]
+  )
+}
+
 export const userRepository = {
   getUser,
   findUserById,
@@ -100,5 +110,6 @@ export const userRepository = {
   checkPostOwner,
   updatePost,
   getUserByName,
-  getUserPosts
+  getUserPosts,
+  retweetPost
 };
