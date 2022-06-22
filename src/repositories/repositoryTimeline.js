@@ -9,7 +9,7 @@ async function getPost(page, userId) {
     JOIN users u ON u.id = p."userId"
     JOIN "linkInfo" l ON l.id = p."linkId"
     LEFT JOIN followers f ON f."followedId" = u.id
-    WHERE f."userId" = $1 OR u.id = $1
+    WHERE f."userId" = $1
     UNION ALL 
     SELECT p.id, u1.id as "userId", u1."userName", u1.image as "userImage", p.description as "postDescription", l.title, l.description, l.url, l.image, r1."retweetCount", r."createdAt", true as "isRetweet", u2."userName" as "retweeterUsername"
     FROM posts p
@@ -24,7 +24,7 @@ async function getPost(page, userId) {
     JOIN users u2 ON u2.id = r."userId"
     JOIN "linkInfo" l ON l.id = p."linkId"
     LEFT JOIN followers f2 ON f2."followedId" = u1.id
-    WHERE f2."userId" = $1 OR u1.id = $1
+    WHERE f2."userId" = $1
     ORDER BY "createdAt" DESC
     ${offset}
     LIMIT 10
@@ -41,6 +41,15 @@ async function getToken(token) {
     )
 }
 
+async function checkUserFollowed(userId) {
+    return db.query(
+        `SELECT f."followedId" 
+        FROM followers f
+        WHERE f."userId" = $1`
+        , [userId]
+    )
+}
+
 export const repositoryTimeline = {
-    getPost, getToken
+    getPost, getToken, checkUserFollowed
 }
