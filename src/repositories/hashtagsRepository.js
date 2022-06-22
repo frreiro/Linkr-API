@@ -1,8 +1,8 @@
 import connectDB from './../config/database.js';
 
-async function findPostsByHashtagName(hashtag) {
+async function findPostsByHashtagName(hashtag, page) {
   const db = await connectDB();
-
+  const offset = `OFFSET ${page * 10}`
   const query = `
   SELECT p.id, u.id as "userId", u."userName", u.image as "userImage", p.description as "postDescription", l.title, l.description, l.url, l.image 
   FROM "postHashtag" ph
@@ -12,6 +12,8 @@ async function findPostsByHashtagName(hashtag) {
   JOIN "linkInfo" l ON l.id = p."linkId"
   WHERE hashtag = $1
   ORDER BY p."createdAt" DESC
+  ${offset}
+  LIMIT 10
   `;
 
   return db.query(query, [hashtag]);

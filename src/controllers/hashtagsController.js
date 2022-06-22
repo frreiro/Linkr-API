@@ -3,8 +3,9 @@ import { _mapPostData } from './timelineController.js';
 
 export const getPostsByHashtag = async (req, res) => {
   const { hashtag } = req.params;
+  const { page } = req.query
   try {
-    const { rows: posts } = await hashtagsRepository.findPostsByHashtagName(hashtag);
+    const { rows: posts } = await hashtagsRepository.findPostsByHashtagName(hashtag, page);
     res.status(200).send(_mapPostData(posts));
   } catch (error) {
     res.status(500).send(error);
