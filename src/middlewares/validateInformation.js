@@ -1,4 +1,5 @@
 import { userRepository } from "../repositories/userRepository.js"
+import retweetSchema from "./schemas/retweetSchema.js"
 import sendPostSchema from "./schemas/sendPostSchema.js"
 import updatePostSchema from "./schemas/updatePostSchema.js"
 
@@ -13,6 +14,15 @@ export async function validatePostSchema(req, res, next) {
 
 export async function validateUpdatePostSchema(req, res, next) {
     const validation = updatePostSchema.validate(req.body)
+    if (validation.error) {
+        return res.status(422).send(validation.error)
+    }
+
+    next()
+}
+
+export async function validateRetweetSchema(req, res, next) {
+    const validation = retweetSchema.validate(req.body)
     if (validation.error) {
         return res.status(422).send(validation.error)
     }

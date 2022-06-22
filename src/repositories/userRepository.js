@@ -78,6 +78,29 @@ async function getUserByName(userName) {
   );
 }
 
+async function getUserPosts(userId) {
+  const db = await connectDB();
+  return db.query(
+    `SELECT p.id, u.id as "userId", u."userName", u.image as "userImage", p.description as "postDescription", l.title, l.description, l.url, l.image 
+     FROM posts p
+     JOIN users u ON u.id = p."userId"
+     JOIN "linkInfo" l ON l.id = p."linkId"
+     WHERE p."userId" = $1
+     ORDER BY p."createdAt" DESC
+  `, [userId]
+  );
+}
+
+async function retweetPost(userId, postId) {
+  const db = await connectDB();
+  return db.query(
+    `INSERT INTO retweets ("userId", "postId")
+    VALUES ($1, $2)
+    `, 
+    [userId, postId]
+  )
+}
+
 export const userRepository = {
   getUser,
   findUserById,
@@ -87,4 +110,6 @@ export const userRepository = {
   checkPostOwner,
   updatePost,
   getUserByName,
+  getUserPosts,
+  retweetPost
 };
