@@ -1,6 +1,7 @@
 import connectDB from "../config/database.js";
 
 const db = await connectDB();
+
 async function getPost(page) {
     const offset = `OFFSET ${page * 10}`
     return db.query(`
