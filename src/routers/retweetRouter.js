@@ -1,4 +1,5 @@
 import { Router } from "express"
+import { retweetPost } from "../controllers/retweetController.js"
 
 import {
     validateRetweetSchema,
@@ -7,6 +8,11 @@ import {
 
 const retweetRouter = Router()
 
-retweetRouter.post("/share/:postId", validateRetweetSchema, validateToken)
+retweetRouter.post(
+    "/share/:postId",
+    validateRetweetSchema,
+    validateToken,
+    retweetPost
+)
 
 export default retweetRouter
