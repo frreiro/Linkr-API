@@ -1,4 +1,4 @@
-import { followRepository } from '../repositories/followRepository';
+import { followRepository } from '../repositories/followRepository.js';
 
 export async function postFollow(req, res) {
   const { currentUserId, followedUserId } = req.body;
