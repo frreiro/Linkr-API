@@ -78,7 +78,8 @@ async function getUserByName(userName) {
   );
 }
 
-async function getUserPosts(userId) {
+async function getUserPosts(userId, page) {
+  const offset = `OFFSET ${page * 10}`
   const db = await connectDB();
   return db.query(
     `SELECT p.id, u.id as "userId", u."userName", u.image as "userImage", p.description as "postDescription", l.title, l.description, l.url, l.image 
@@ -87,6 +88,8 @@ async function getUserPosts(userId) {
      JOIN "linkInfo" l ON l.id = p."linkId"
      WHERE p."userId" = $1
      ORDER BY p."createdAt" DESC
+     ${offset}
+     LIMIT 10
   `, [userId]
   );
 }
@@ -96,7 +99,7 @@ async function retweetPost(userId, postId) {
   return db.query(
     `INSERT INTO retweets ("userId", "postId")
     VALUES ($1, $2)
-    `, 
+    `,
     [userId, postId]
   )
 }

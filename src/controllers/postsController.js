@@ -50,12 +50,12 @@ export async function putPost(req, res) {
 }
 
 export async function getUserPosts(req, res) {
-    const {id} = req.params
-
+    const { id } = req.params
+    const { page } = req.query
+    console.log(page)
     try {
-        const postsQuery = await userRepository.getUserPosts(id)
+        const postsQuery = await userRepository.getUserPosts(id, page)
         const postsQueryResult = postsQuery.rows
-        
         res.status(200).send(_mapPostData(postsQueryResult));
     } catch (e) {
         console.log(e)
