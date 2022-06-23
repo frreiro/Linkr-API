@@ -8,7 +8,7 @@
 // [x] Devo validar se o usuário enviou um token válido
 // [x] Devo receber uma header no formato {postId}
 // [] Devo validar se o post existe
-// [] Devo listar os comentários daquele post
+// [x] Devo listar os comentários daquele post
 
 import { commentsRepository } from "../repositories/commentsRepository.js"
 

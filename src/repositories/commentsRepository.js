@@ -7,7 +7,9 @@ async function addComment(postId, userId, comment){
 }
 
 async function findComments(postId){
-    return await db.query(`SELECT * FROM comments WHERE "postId" = $1`,[postId])
+    return await db.query(` SELECT comment, "userName", image FROM comments
+                            JOIN users ON "userId" = users.id
+                            WHERE "postId" = $1`,[postId])
 }
 
 export const commentsRepository = {
