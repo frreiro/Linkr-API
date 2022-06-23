@@ -3,7 +3,7 @@ import { userRepository } from "../repositories/userRepository.js";
 
 export const deletePost = async (req, res) => {
     const {id : userId} = res.locals.user
-    const {postId} = req.body
+    const postId = req.params.id
     try{
         let validate = await userRepository.checkPostOwner(postId, userId);
         if(validate.rows[0] === undefined){
