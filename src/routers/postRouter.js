@@ -4,7 +4,7 @@ import {
     getUserPosts,
     putPost,
 } from "../controllers/postsController.js"
-import { tokenExists } from "../middlewares/timelineMiddleware.js"
+import { pageValidate, tokenExists } from "../middlewares/timelineMiddleware.js"
 import { checkEditHashtags, searchHashtag } from "../middlewares/hashtagsMiddleware.js"
 import {
     validatePostOwnership,
@@ -15,7 +15,7 @@ import {
 
 const postRouter = Router()
 
-postRouter.get("/posts/:id", tokenExists, getUserPosts)
+postRouter.get("/posts/:id", tokenExists, pageValidate, getUserPosts)
 postRouter.post(
     "/posts",
     validatePostSchema,

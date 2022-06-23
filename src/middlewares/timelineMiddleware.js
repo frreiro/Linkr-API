@@ -1,4 +1,5 @@
 import { repositoryTimeline } from '../repositories/repositoryTimeline.js';
+import pageSchema from './schemas/pageSchema.js';
 
 export async function tokenExists(req, res, next) {
     const { authorization } = req.headers;
@@ -29,3 +30,13 @@ export async function checkIfUserFollow(req, res, next) {
 
     }
 }
+
+export async function pageValidate(req, res, next) {
+    const { page } = req.query
+    let { error } = pageSchema.validate(page);
+    if (error) {
+        return res.status(422).send(error);
+    } else {
+        next();
+    }
+};
