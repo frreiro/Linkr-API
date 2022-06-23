@@ -4,7 +4,7 @@ async function checkFollowStatus(currentUserId, followedUserId) {
   const db = await connectDB();
 
   return db.query(
-    'SELECT * FROM followers WHERE "userId" = $1 AND "followedId" = $2',
+    'SELECT COUNT(*) FROM followers WHERE "userId" = $1 AND "followedId" = $2;',
     [currentUserId, followedUserId]
   );
 }
@@ -13,7 +13,7 @@ async function insertFollow(currentUserId, followedUserId) {
   const db = await connectDB();
 
   return db.query(
-    'INSERT INTO followers("userId", "followedId") VALUES ($1, $2)',
+    'INSERT INTO followers("userId", "followedId") VALUES($1, $2)',
     [currentUserId, followedUserId]
   );
 }
