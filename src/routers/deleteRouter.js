@@ -4,6 +4,6 @@ import { validateToken } from "../middlewares/likesMiddleware.js";
 
 const deleteRouter = Router();
 
-deleteRouter.delete("/posts/:id", validateToken, deletePost);
+deleteRouter.post("/delete/:id", validateToken, deletePost);
 
 export default deleteRouter;
