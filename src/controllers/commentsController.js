@@ -7,7 +7,7 @@
 
 // [x] Devo validar se o usuário enviou um token válido
 // [x] Devo receber uma header no formato {postId}
-// [] Devo validar se o post existe
+// [x] Devo validar se o post existe
 // [x] Devo listar os comentários daquele post
 
 import { commentsRepository } from "../repositories/commentsRepository.js"
@@ -24,9 +24,15 @@ export async function insertComment(req, res){
 }
 export async function listComments(req, res){
     const {id : postId} = req.params
+    const {id : userId} = res.locals.user
     try {
-        const list = await commentsRepository.findComments(postId)   
-        res.send(list.rows)
+        const follows = await commentsRepository.findfollowing(userId)
+        const list = await commentsRepository.findComments(postId)
+        const constructor = {
+            follows: follows.rows,
+            list: list.rows
+        }
+        res.send(constructor)
     } catch (error) {
         res.send("err")
     }
