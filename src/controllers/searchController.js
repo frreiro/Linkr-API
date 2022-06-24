@@ -7,7 +7,11 @@ export const searchGet = async (req, res) => {
     try{
         const following = await followRepository.followingList(id);
         const result = await userRepository.getUserByName(body.question);
-        res.status(200).send(result.rows, following.rows);
+        const sendObj = {
+            following: following.rows,
+            result: result.rows
+        }
+        res.status(200).send(sendObj);
     } catch(e){
         res.sendStatus(500);
         console.log(e);
