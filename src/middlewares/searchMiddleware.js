@@ -9,7 +9,6 @@ export const searchMiddleware = async (req, res, next) => {
     let { error } = searchSchema.validate(body);
     if(!error){
         try{
-            console.log(token);
             const { rows } = await repositoryTimeline.getToken(token)
             const { userId } = rows[0]
             if (!userId) return res.status(401).send("Invalid token.")
