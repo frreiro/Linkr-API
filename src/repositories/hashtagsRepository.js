@@ -10,7 +10,7 @@ async function findPostsByHashtagName(hashtag, page) {
   JOIN posts p ON ph."postId" = p.id
   JOIN users u ON p."userId" = u.id
   JOIN "linkInfo" l ON l.id = p."linkId"
-  WHERE hashtag = $1
+  WHERE hashtag = $1 AND p."deletedAt" IS NULL
   ORDER BY p."createdAt" DESC
   ${offset}
   LIMIT 10

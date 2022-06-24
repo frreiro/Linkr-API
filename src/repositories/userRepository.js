@@ -86,7 +86,7 @@ async function getUserPosts(userId, page) {
      FROM posts p
      JOIN users u ON u.id = p."userId"
      JOIN "linkInfo" l ON l.id = p."linkId"
-     WHERE p."userId" = $1
+     WHERE p."userId" = $1 AND p."deletedAt" IS NULL
      ORDER BY p."createdAt" DESC
      ${offset}
      LIMIT 10
