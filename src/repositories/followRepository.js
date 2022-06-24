@@ -27,8 +27,15 @@ async function deleteFollow(currentUserId, followedUserId) {
   );
 }
 
+async function followingList(userId){
+  const db = await connectDB();
+
+  return db.query(`SELECT "followedId" FROM followers WHERE "userId" = $1`, [userId]);
+}
+
 export const followRepository = {
   checkFollowStatus,
   insertFollow,
   deleteFollow,
+  followingList
 };
